@@ -19,6 +19,9 @@ contract getPriceOfEthInUSD {
         AggregatorV3Interface priceFeed = AggregatorV3Interface(0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e);
         (,int price,,,) = priceFeed.latestRoundData();
         // ETH in terms of USD
+        //3000.000000000 8 décimales
+        //1eth = 1 000 000 000 000 000 000 000 Wei 18 décimales
+        //10 = 18 - 8
         return uint256(price * 1e10);
     }
 
@@ -29,6 +32,7 @@ contract getPriceOfEthInUSD {
 
     function getConversionRate(uint256 ethAmount) public view returns(uint256) {
         uint256 ethPrice = getPrice();
+        // Division par 1e18 car "ethPrice * ethAmount" aurait 36 décimales
         uint256 ethAmountInUsd = (ethPrice * ethAmount) / 1e18;
         return ethAmountInUsd;
     }
